@@ -130,6 +130,7 @@
                         return false;
                     }
                 }
+                // insert
                 if (first_name != '' && last_name != '' && extension != '') {
                     $.ajax({
                         method: "POST",
@@ -173,6 +174,25 @@
                     }
                 });
 
+            });
+            $(document).on('click', '.delete', function() {
+                var user_id = $(this).attr('id');
+                if (confirm('Are you sure you want to delete this')) {
+                    $.ajax({
+                        type: "post",
+                        url: "delete.php",
+                        data: {
+                            user_id: user_id
+                        },
+                        dataType: "json",
+                        success: function(data) {
+                            alert(data);
+                            dataTable.ajax.reload();
+                        }
+                    });
+                } else {
+                    return false;
+                }
             });
         });
     </script>
