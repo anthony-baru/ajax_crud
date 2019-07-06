@@ -41,10 +41,10 @@
                 <thead>
                     <tr>
                         <th width="10%">Image</th>
-                        <th width="35%">First Name</th>
-                        <th width="35%">Last Name</th>
-                        <th width="10%">Edit</th>
-                        <th width="10%">Delete</th>
+                        <th width="15%">First Name</th>
+                        <th width="15%">Last Name</th>
+                        <th width="5%">Edit</th>
+                        <th width="5%">Delete</th>
                     </tr>
                 </thead>
             </table>
@@ -177,14 +177,13 @@
             });
             $(document).on('click', '.delete', function() {
                 var user_id = $(this).attr('id');
-                if (confirm('Are you sure you want to delete this')) {
+                if (confirm('Are you sure you want to delete this?')) {
                     $.ajax({
                         type: "post",
                         url: "delete.php",
                         data: {
                             user_id: user_id
                         },
-                        dataType: "json",
                         success: function(data) {
                             alert(data);
                             dataTable.ajax.reload();
