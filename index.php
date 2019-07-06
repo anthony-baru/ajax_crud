@@ -72,6 +72,7 @@
                         <label for="">Select User Image</label>
                         <input type="file" name="user_image" id="user_image" class="form-control">
                         <br />
+                        <span id="user_uploaded_image"></span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -147,6 +148,31 @@
                 } else {
                     alert('All fields are required');
                 }
+            });
+
+            //update
+            $(document).on('click', '.update', function() {
+                var user_id = $(this).attr('id');
+                $.ajax({
+                    type: "POST",
+                    url: "fetch_single.php",
+                    data: {
+                        user_id: user_id
+                    },
+                    dataType: "json",
+                    //receive data from server
+                    success: function(data) {
+                        $('#exampleModal').modal('show');
+                        $('#first_name').val(data.first_name);
+                        $('#last_name').val(data.last_name);
+                        $('.modal-title').text('Edit User');
+                        $('#user_id').val(user_id);
+                        $('#user_uploaded_image').html(data.user_image);
+                        $('#action').val('Edit');
+                        $('#operation').val('Edit');
+                    }
+                });
+
             });
         });
     </script>
