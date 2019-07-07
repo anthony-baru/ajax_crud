@@ -93,6 +93,7 @@
     <script src="js/bootstrap.min.js" integrity="" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script src="js/sweetalert2@8.js"> </script>
     <script>
         $(document).ready(function() {
             $('#add_button').click(function() {
@@ -140,14 +141,26 @@
                         contentType: false,
                         processData: false,
                         success: function(response) {
-                            alert(response);
+                            swal.fire({
+                                title: "success",
+                                text: response,
+                                type: "success",
+                                button: "Ok",
+                                timer: 1500
+                            })
                             $('#user_form')[0].reset();
                             $('#exampleModal').modal('hide');
                             dataTable.ajax.reload();
                         }
                     });
                 } else {
-                    alert('All fields are required');
+                    swal.fire({
+                        title: "Fields empty!",
+                        text: "All fields are required.",
+                        type: "error",
+                        button: "Ok",
+                        allowOutsideClick: false
+                    })
                 }
             });
 
@@ -175,24 +188,60 @@
                 });
 
             });
+
             $(document).on('click', '.delete', function() {
                 var user_id = $(this).attr('id');
-                if (confirm('Are you sure you want to delete this?')) {
-                    $.ajax({
-                        type: "post",
-                        url: "delete.php",
-                        data: {
-                            user_id: user_id
-                        },
-                        success: function(data) {
-                            alert(data);
-                            dataTable.ajax.reload();
-                        }
-                    });
-                } else {
-                    return false;
-                }
+                SwalDelete(user_id);
+                // if (confirm('Are you sure you want to delete this?')) {
+                //     $.ajax({
+                //         type: "post",
+                //         url: "delete.php",
+                //         data: {
+                //             user_id: user_id
+                //         },
+                //         success: function(data) {
+                //             alert(data);
+                //             dataTable.ajax.reload();
+                //         }
+                //     });
+                // } else {
+                //     return false;
+                // }
             });
+
+            function SwalDelete(user_id) {
+                Swal.fire({
+                    title: 'Are you sure,',
+                    text: 'It will be deleted permanently!',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: false,
+                    preConfirm: function() {
+                        return new Promise(function(resolve) {
+                            $.ajax({
+                                    type: "POST",
+                                    url: "delete.php",
+                                    data: {
+                                        user_id: user_id
+                                    },
+                                    dataType: "json"
+                                })
+                                .done(function(response) {
+                                    swal.fire('Deleted!', response.message, response.status);
+                                    dataTable.ajax.reload();
+                                })
+                                .fail(function() {
+                                    swal.fire('Oops...', 'Something went wrong with ajax!', 'error');
+                                });
+                        });
+                    }
+                });
+            }
+
         });
     </script>
 

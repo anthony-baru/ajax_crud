@@ -42,6 +42,6 @@ if (isset($_POST['operation'])) {
                 ':id' => $_POST['user_id']
             )
         );
-        echo  'Data Updated';
+        echo  'Data Updated Successfully';
     }
 }
