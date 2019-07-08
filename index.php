@@ -41,8 +41,8 @@
                 <thead>
                     <tr>
                         <th width="10%">Image</th>
-                        <th width="15%">First Name</th>
-                        <th width="15%">Last Name</th>
+                        <th width="10%">First Name</th>
+                        <th width="10%">Last Name</th>
                         <th width="5%">Edit</th>
                         <th width="5%">Delete</th>
                     </tr>

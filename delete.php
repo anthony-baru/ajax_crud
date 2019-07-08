@@ -12,7 +12,7 @@ if (isset($_POST['user_id'])) {
     );
     if ($result) {
         $response['status'] = 'success';
-        $response['message'] = 'Product Deleted Successfully';
+        $response['message'] = 'User Deleted Successfully';
     } else {
         $response['status'] = 'error';
         $response['message'] = 'Unable to delete product ...';
